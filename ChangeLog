@@ -1,0 +1,15 @@
+TODO:
+* pyvsapm: fix libvsapm_partition_get_type
+
+* finalize a first version of the library and Python bindings
+* detect leading drive descriptor
+
+* determine what can generate a hybrid disk that contains both an ISO 9660 primary volume descriptor and an Apple Partition Map
+
+20210509
+* see `git log' for more recent change log
+* initial version based on previous work
+
+20090201
+* created documentation
+

@@ -66,7 +66,8 @@ The APM is supported by:
 The APM consists of:
 
 * the drive descriptor
-* multiple partition map entries
+* partition map entry of type Apple_partition_map
+  * zero partition map entries
 
 [cols="1,5",options="header"]
 |===
@@ -140,7 +141,7 @@ map describes the partition map itself.
 
 === The partition map entry
 
-The partition map entry is 512 bytes of size and consists of:
+A partition map entry is 512 bytes of size and consists of:
 
 [cols="1,1,1,5",options="header"]
 |===
@@ -148,21 +149,22 @@ The partition map entry is 512 bytes of size and consists of:
 | 0 | 2 | "\x50\x4d" | Signature +
 "PM"
 | 2 | 2 | 0x00 | [yellow-background]*Unknown (Reserved)*
-| 4 | 4 | | Amount of partition entries +
-[yellow-background]*Does this value contain the total number of blocks in the partition map?*
-| 8 | 4 | | Start physical block of the partition
-| 12 | 4 | | Size of the partition +
-in physical blocks
+| 4 | 4 | | Number of entries +
+Contains the total number of entries in the partition map
+| 8 | 4 | | Partition start sector
+| 12 | 4 | | Partition number of sectors
 | 16 | 32 | | Partition name +
-Contains an ASCII string [yellow-background]*(with end-of-string character?)*
+Contains an ASCII string [yellow-background]*(with an end-of-string character?)*
 | 48 | 32 | | Partition type +
-Contains an ASCII string [yellow-background]*(with end-of-string character?)*
-| 80 | 4 | | Start logical block of the partition data area
-| 84 | 4 | | Partition data area number of logical blocks
-| 88 | 4 | | Partition status flags
-| 92 | 4 | | Start logical block of the boot code
-| 96 | 4 | | Boot code number of logical blocks
-| 100 | 4 | | Address of the boot code
+Contains an ASCII string [yellow-background]*(with an end-of-string character?)* +
+See section: <<partition_types,Partition types>>
+| 80 | 4 | | Data area start sector
+| 84 | 4 | | Data area number of sectors
+| 88 | 4 | | Status flags +
+See section: <<status_flags,Status flags>>
+| 92 | 4 | | Boot code start sector
+| 96 | 4 | | Boot code number of sectors
+| 100 | 4 | | Boot code address
 | 104 | 4 | | [yellow-background]*Unknown (Reserved)*
 | 108 | 4 | | Boot code entry point
 | 112 | 4 | | [yellow-background]*Unknown (Reserved)*
@@ -171,39 +173,64 @@ Contains an ASCII string [yellow-background]*(with end-of-string character?)*
 | 136 | ( 188 x 2 ) = 376 | 0x00 | [yellow-background]*Unknown (Reserved)*
 |===
 
-=== The partition status flags
+=== [[partition_types]]Partition types
+
+[cols="1,1,5",options="header"]
+|===
+| Value | Identifier | Description
+| Apple_Boot | |
+| Apple_Boot_RAID | |
+| Apple_Bootstrap | |
+| Apple_Driver | |
+| Apple_Driver43 | |
+| Apple_Driver43_CD | |
+| Apple_Driver_ATA | |
+| Apple_Driver_ATAPI | |
+| Apple_Driver_IOKit | |
+| Apple_Driver_OpenFirmware | |
+| Apple_Extra | |
+| Apple_Free | |
+| Apple_FWDriver | |
+| Apple_HFS | |
+| Apple_HFSX | |
+| Apple_Loader | |
+| Apple_MDFW | |
+| Apple_MFS | |
+| Apple_partition_map | |
+| Apple_Patches | |
+| Apple_PRODOS | |
+| Apple_RAID | |
+| Apple_Rhapsody_UFS | |
+| Apple_Scratch | |
+| Apple_Second | |
+| Apple_UFS | |
+| Apple_UNIX_SVR2 | |
+| Apple_Void | |
+| Be_BFS | |
+| MFS | |
+|===
+
+=== [[status_flags]]Status flags
 
 The partition status flags consists of the following values:
 
 [cols="1,1,5",options="header"]
 |===
 | Value | Identifier | Description
-| 0x00000001 | | Entry is valid +
-(A/UX only)
-| 0x00000002 | | Entry is allocated +
-(A/UX only)
-| 0x00000004 | | Entry is in use +
-(A/UX only)
-| 0x00000008 | | Entry contains boot information +
-(A/UX only)
-| 0x00000010 | | Partition is readable +
-(A/UX only)
-| 0x00000020 | | Partition is writable +
-(Macintosh and A/UX)
-| 0x00000040 | | Boot code is position independent +
-(A/UX only)
+| 0x00000001 | | Is valid
+| 0x00000002 | | Is allocated
+| 0x00000004 | | Is in use
+| 0x00000008 | | Contains boot information
+| 0x00000010 | | Is readable
+| 0x00000020 | | Is writable
+| 0x00000040 | | Boot code is position independent
 |  | |
-| 0x00000100 | | Partition contains a chain-compatible driver +
-(Macintosh only)
-| 0x00000200 | | Partition contains a real driver +
-(Macintosh only)
-| 0x00000400 | | Partition contains a chain driver +
-(Macintosh only)
+| 0x00000100 | | Contains a chain-compatible driver
+| 0x00000200 | | Contains a real driver
+| 0x00000400 | | Contains a chain driver
 |  | |
-| 0x40000000 | | Automatic mount at startup +
-(Macintosh only)
-| 0x80000000 | | Is startup partition +
-(Macintosh only)
+| 0x40000000 | | Automatic mount at startup
+| 0x80000000 | | Is startup partition
 |===
 
 :numbered!:
@@ -217,6 +244,14 @@ The partition status flags consists of the following values:
 | Title: | About the SCSI Manager
 | Date: | 1996
 | URL: | http://developer.apple.com/documentation/mac/Devices/Devices-121.html
+|===
+
+`[WIKIPEDIA]`
+
+[cols="1,5",options="header"]
+|===
+| Title: | Apple Partition Map
+| URL: | https://en.wikipedia.org/wiki/Apple_Partition_Map
 |===
 
 [appendix]
