@@ -241,6 +241,10 @@ int libvsapm_partition_map_entry_read_data(
 	}
 	partition_map_entry->type[ 32 ] = 0;
 
+	byte_stream_copy_to_uint32_big_endian(
+	 ( (vsapm_partition_map_entry_t *) data )->status_flags,
+	 partition_map_entry->status_flags );
+
 #if defined( HAVE_DEBUG_OUTPUT )
 	if( libcnotify_verbose != 0 )
 	{
@@ -299,15 +303,12 @@ int libvsapm_partition_map_entry_read_data(
 		 function,
 		 value_32bit );
 
-		byte_stream_copy_to_uint32_big_endian(
-		 ( (vsapm_partition_map_entry_t *) data )->status_flags,
-		 value_32bit );
 		libcnotify_printf(
 		 "%s: status flags\t\t\t: %" PRIu32 "\n",
 		 function,
-		 value_32bit );
+		 partition_map_entry->status_flags );
 		libvsapm_debug_print_partition_status_flags(
-		 value_32bit );
+		 partition_map_entry->status_flags );
 		libcnotify_printf(
 		 "\n" );
 
@@ -381,8 +382,7 @@ int libvsapm_partition_map_entry_read_data(
 	partition_map_entry->name_length = narrow_string_length(
 	                                    (char *) partition_map_entry->name );
 
-	if( ( partition_map_entry->name_length == 0 )
-	 || ( partition_map_entry->name_length >= 32 ) )
+	if( partition_map_entry->name_length >= 32 )
 	{
 		libcerror_error_set(
 		 error,
@@ -683,6 +683,43 @@ int libvsapm_partition_map_entry_get_number_of_sectors(
 		return( -1 );
 	}
 	*number_of_sectors = partition_map_entry->number_of_sectors;
+
+	return( 1 );
+}
+
+/* Retrieves the partition status flags
+ * Returns 1 if successful or -1 on error
+ */
+int libvsapm_partition_map_entry_get_status_flags(
+     libvsapm_partition_map_entry_t *partition_map_entry,
+     uint32_t *status_flags,
+     libcerror_error_t **error )
+{
+	static char *function = "libvsapm_partition_map_entry_get_status_flags";
+
+	if( partition_map_entry == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid partition map entry.",
+		 function );
+
+		return( -1 );
+	}
+	if( status_flags == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid status flags.",
+		 function );
+
+		return( -1 );
+	}
+	*status_flags = partition_map_entry->status_flags;
 
 	return( 1 );
 }

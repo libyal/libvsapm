@@ -341,6 +341,15 @@ int libvsapm_partition_get_type_string(
      size_t string_size,
      libvsapm_error_t **error );
 
+/* Retrieves the partition status flags
+ * Returns 1 if successful or -1 on error
+ */
+LIBVSAPM_EXTERN \
+int libvsapm_partition_get_status_flags(
+     libvsapm_partition_t *partition,
+     uint32_t *status_flags,
+     libvsapm_error_t **error );
+
 /* Retrieves the partition offset relative to the start of the volume
  * Returns 1 if successful or -1 on error
  */

@@ -58,6 +58,13 @@ PyMethodDef pyvsapm_partition_object_methods[] = {
 	  "\n"
 	  "Retrieves the volume offset." },
 
+	{ "get_status_flags",
+	  (PyCFunction) pyvsapm_partition_get_status_flags,
+	  METH_NOARGS,
+	  "get_status_flags() -> Integer\n"
+	  "\n"
+	  "Retrieves the status flags." },
+
 	{ "read_buffer",
 	  (PyCFunction) pyvsapm_partition_read_buffer,
 	  METH_VARARGS | METH_KEYWORDS,
@@ -136,6 +143,12 @@ PyGetSetDef pyvsapm_partition_object_get_set_definitions[] = {
 	  (getter) pyvsapm_partition_get_volume_offset,
 	  (setter) 0,
 	  "The volume offset.",
+	  NULL },
+
+	{ "status_flags",
+	  (getter) pyvsapm_partition_get_status_flags,
+	  (setter) 0,
+	  "The status flags.",
 	  NULL },
 
 	{ "size",
@@ -581,6 +594,65 @@ PyObject *pyvsapm_partition_get_volume_offset(
 	}
 	integer_object = pyvsapm_integer_signed_new_from_64bit(
 	                  (int64_t) offset );
+
+	return( integer_object );
+}
+
+/* Retrieves the status flags
+ * Returns a Python object if successful or NULL on error
+ */
+PyObject *pyvsapm_partition_get_status_flags(
+           pyvsapm_partition_t *pyvsapm_partition,
+           PyObject *arguments PYVSAPM_ATTRIBUTE_UNUSED )
+{
+	PyObject *integer_object = NULL;
+	libcerror_error_t *error = NULL;
+	static char *function    = "pyvsapm_partition_get_status_flags";
+	uint32_t value_32bit     = 0;
+	int result               = 0;
+
+	PYVSAPM_UNREFERENCED_PARAMETER( arguments )
+
+	if( pyvsapm_partition == NULL )
+	{
+		PyErr_Format(
+		 PyExc_ValueError,
+		 "%s: invalid partition.",
+		 function );
+
+		return( NULL );
+	}
+	Py_BEGIN_ALLOW_THREADS
+
+	result = libvsapm_partition_get_status_flags(
+	          pyvsapm_partition->partition,
+	          &value_32bit,
+	          &error );
+
+	Py_END_ALLOW_THREADS
+
+	if( result == -1 )
+	{
+		pyvsapm_error_raise(
+		 error,
+		 PyExc_IOError,
+		 "%s: unable to retrieve status flags.",
+		 function );
+
+		libcerror_error_free(
+		 &error );
+
+		return( NULL );
+	}
+	else if( result == 0 )
+	{
+		Py_IncRef(
+		 Py_None );
+
+		return( Py_None );
+	}
+	integer_object = PyLong_FromUnsignedLong(
+	                  (unsigned long) value_32bit );
 
 	return( integer_object );
 }

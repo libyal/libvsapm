@@ -46,12 +46,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vsapm_test_partition_map_en
 		{BA8293CB-B6B6-4893-858D-58CE55BBDC0C} = {BA8293CB-B6B6-4893-858D-58CE55BBDC0C}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vsapm_test_partition_values", "vsapm_test_partition_values\vsapm_test_partition_values.vcproj", "{E4FE96E4-B9EB-4BED-B22D-9266A6144254}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C06A0FD9-6A98-4316-9B87-60C1E08420CD} = {C06A0FD9-6A98-4316-9B87-60C1E08420CD}
-		{BA8293CB-B6B6-4893-858D-58CE55BBDC0C} = {BA8293CB-B6B6-4893-858D-58CE55BBDC0C}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vsapm_test_section_values", "vsapm_test_section_values\vsapm_test_section_values.vcproj", "{8725FD92-060E-42D4-A895-6A3D88A4538C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C06A0FD9-6A98-4316-9B87-60C1E08420CD} = {C06A0FD9-6A98-4316-9B87-60C1E08420CD}
@@ -259,10 +253,6 @@ Global
 		{40A9B4CC-2EF1-43B3-86B1-95CA68489692}.Release|Win32.Build.0 = Release|Win32
 		{40A9B4CC-2EF1-43B3-86B1-95CA68489692}.VSDebug|Win32.ActiveCfg = VSDebug|Win32
 		{40A9B4CC-2EF1-43B3-86B1-95CA68489692}.VSDebug|Win32.Build.0 = VSDebug|Win32
-		{E4FE96E4-B9EB-4BED-B22D-9266A6144254}.Release|Win32.ActiveCfg = Release|Win32
-		{E4FE96E4-B9EB-4BED-B22D-9266A6144254}.Release|Win32.Build.0 = Release|Win32
-		{E4FE96E4-B9EB-4BED-B22D-9266A6144254}.VSDebug|Win32.ActiveCfg = VSDebug|Win32
-		{E4FE96E4-B9EB-4BED-B22D-9266A6144254}.VSDebug|Win32.Build.0 = VSDebug|Win32
 		{8725FD92-060E-42D4-A895-6A3D88A4538C}.Release|Win32.ActiveCfg = Release|Win32
 		{8725FD92-060E-42D4-A895-6A3D88A4538C}.Release|Win32.Build.0 = Release|Win32
 		{8725FD92-060E-42D4-A895-6A3D88A4538C}.VSDebug|Win32.ActiveCfg = VSDebug|Win32

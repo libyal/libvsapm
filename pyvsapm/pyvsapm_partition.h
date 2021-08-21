@@ -74,6 +74,10 @@ PyObject *pyvsapm_partition_get_volume_offset(
            pyvsapm_partition_t *pyvsapm_partition,
            PyObject *arguments );
 
+PyObject *pyvsapm_partition_get_status_flags(
+           pyvsapm_partition_t *pyvsapm_partition,
+           PyObject *arguments );
+
 PyObject *pyvsapm_partition_read_buffer(
            pyvsapm_partition_t *pyvsapm_partition,
            PyObject *arguments,

@@ -303,6 +303,15 @@ void pyvsapm_volume_free(
 
 		return;
 	}
+	if( pyvsapm_volume->file_io_handle != NULL )
+	{
+		if( pyvsapm_volume_close(
+		     pyvsapm_volume,
+		     NULL ) == NULL )
+		{
+			return;
+		}
+	}
 	if( pyvsapm_volume->volume != NULL )
 	{
 		Py_BEGIN_ALLOW_THREADS

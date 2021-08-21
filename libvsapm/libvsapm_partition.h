@@ -110,6 +110,12 @@ int libvsapm_partition_get_volume_offset(
      off64_t *volume_offset,
      libcerror_error_t **error );
 
+LIBVSAPM_EXTERN \
+int libvsapm_partition_get_status_flags(
+     libvsapm_partition_t *partition,
+     uint32_t *status_flags,
+     libcerror_error_t **error );
+
 ssize_t libvsapm_internal_partition_read_buffer_from_file_io_handle(
          libvsapm_internal_partition_t *internal_partition,
          libbfio_handle_t *file_io_handle,

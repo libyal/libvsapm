@@ -86,6 +86,10 @@ int info_handle_close_input(
      info_handle_t *info_handle,
      libcerror_error_t **error );
 
+void info_handle_partition_status_flags_fprint(
+      uint32_t status_flags,
+      FILE *notify_stream );
+
 int info_handle_partition_fprint(
      info_handle_t *info_handle,
      libvsapm_partition_t *partition,

@@ -63,6 +63,10 @@ struct libvsapm_partition_map_entry
 	/* The type length
 	 */
 	size_t type_length;
+
+	/* The status flags
+	 */
+	uint32_t status_flags;
 };
 
 int libvsapm_partition_map_entry_initialize(
@@ -105,6 +109,11 @@ int libvsapm_partition_map_entry_get_sector_number(
 int libvsapm_partition_map_entry_get_number_of_sectors(
      libvsapm_partition_map_entry_t *partition_map_entry,
      uint32_t *number_of_sectors,
+     libcerror_error_t **error );
+
+int libvsapm_partition_map_entry_get_status_flags(
+     libvsapm_partition_map_entry_t *partition_map_entry,
+     uint32_t *status_flags,
      libcerror_error_t **error );
 
 #if defined( __cplusplus )

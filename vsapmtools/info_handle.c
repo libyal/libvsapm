@@ -478,6 +478,91 @@ int info_handle_close_input(
 	return( 0 );
 }
 
+/* Prints the partition status flags to the notify stream
+ */
+void info_handle_partition_status_flags_fprint(
+      uint32_t status_flags,
+      FILE *notify_stream )
+{
+	if( ( status_flags & 0x00000001UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tIs valid\n" );
+	}
+	if( ( status_flags & 0x00000002UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tIs allocated\n" );
+	}
+	if( ( status_flags & 0x00000004UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tIs in use\n" );
+	}
+	if( ( status_flags & 0x00000008UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tContains boot information\n" );
+	}
+	if( ( status_flags & 0x00000010UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tIs readable\n" );
+	}
+	if( ( status_flags & 0x00000020UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tIs writeable\n" );
+	}
+	if( ( status_flags & 0x00000040UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tBoot code is position independent\n" );
+	}
+
+	if( ( status_flags & 0x00000100UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tContains a chain-compatible driver\n" );
+	}
+	if( ( status_flags & 0x00000200UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tContains a real driver\n" );
+	}
+	if( ( status_flags & 0x00000400UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tContains a chain driver\n" );
+	}
+
+	if( ( status_flags & 0x40000000UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tAutomatic mount at startup\n" );
+	}
+	if( ( status_flags & 0x80000000UL ) != 0 )
+	{
+		fprintf(
+		 notify_stream,
+		 "\t\tIs startup partition\n" );
+	}
+	fprintf(
+	 notify_stream,
+	 "\n" );
+}
+
 /* Prints the partition information
  * Returns 1 if successful or -1 on error
  */
@@ -491,6 +576,7 @@ int info_handle_partition_fprint(
 	static char *function = "info_handle_partition_fprint";
 	size64_t size         = 0;
 	off64_t volume_offset = 0;
+	uint32_t status_flags = 0;
 
 	if( info_handle == NULL )
 	{
@@ -523,6 +609,28 @@ int info_handle_partition_fprint(
 	 "\tType\t\t\t: %s\n",
 	 ascii_string );
 
+	if( libvsapm_partition_get_name_string(
+	     partition,
+	     ascii_string,
+	     32,
+	     error ) != 1 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+		 "%s: unable to retrieve partition name string.",
+		 function );
+
+		return( -1 );
+	}
+	if( ascii_string[ 0 ] != 0 )
+	{
+		fprintf(
+		 info_handle->notify_stream,
+		 "\tName\t\t\t: %s\n",
+		 ascii_string );
+	}
 	if( libvsapm_partition_get_volume_offset(
 	     partition,
 	     &volume_offset,
@@ -543,26 +651,6 @@ int info_handle_partition_fprint(
 	 volume_offset,
 	 volume_offset );
 
-	if( libvsapm_partition_get_name_string(
-	     partition,
-	     ascii_string,
-	     32,
-	     error ) != 1 )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
-		 "%s: unable to retrieve partition name string.",
-		 function );
-
-		return( -1 );
-	}
-	fprintf(
-	 info_handle->notify_stream,
-	 "\tName\t\t\t: %s\n",
-	 ascii_string );
-
 	if( libvsapm_partition_get_size(
 	     partition,
 	     &size,
@@ -581,6 +669,29 @@ int info_handle_partition_fprint(
 	 info_handle->notify_stream,
 	 "\tSize\t\t\t: %" PRIu64 "\n",
 	 size );
+
+	if( libvsapm_partition_get_status_flags(
+	     partition,
+	     &status_flags,
+	     error ) != 1 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_GET_FAILED,
+		 "%s: unable to retrieve partition status flags.",
+		 function );
+
+		return( -1 );
+	}
+	fprintf(
+	 info_handle->notify_stream,
+	 "\tStatus flags\t\t: 0x%08" PRIx32 "\n",
+	 status_flags );
+
+	info_handle_partition_status_flags_fprint(
+	 status_flags,
+	 info_handle->notify_stream );
 
 	return( 1 );
 }
@@ -711,9 +822,6 @@ int info_handle_partitions_fprint(
 
 				goto on_error;
 			}
-			fprintf(
-			 info_handle->notify_stream,
-			 "\n" );
 		}
 	}
 	return( 1 );

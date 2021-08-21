@@ -173,6 +173,9 @@ See section: <<status_flags,Status flags>>
 | 136 | ( 188 x 2 ) = 376 | 0x00 | [yellow-background]*Unknown (Reserved)*
 |===
 
+[NOTE]
+Partition name can be empty.
+
 === [[partition_types]]Partition types
 
 [cols="1,1,5",options="header"]
