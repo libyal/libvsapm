@@ -23,7 +23,7 @@ for the libvsapm project.
 [cols="1,5"]
 |===
 | Author(s): | Joachim Metz <joachim.metz@gmail.com>
-| Abstract: | This document contains information about the Apple Partition Map (APM).
+| Abstract: | This document contains information about the Apple Partition Map (APM) format.
 | Classification: | Public
 | Keywords: | Apple Partition Map (APM)
 |===
