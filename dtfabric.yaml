@@ -1,0 +1,105 @@
+name: vsapm
+type: format
+description: Apple Partition Map (APM) volume system format
+urls:
+- 'https://github.com/libyal/libvsapm/blob/main/documentation/Apple%20partition%20map%20(APM)%20format.asciidoc'
+metadata:
+  authors: ['Joachim Metz <joachim.metz@gmail.com>']
+  year: 2009
+attributes:
+  byte_order: big-endian
+layout:
+- data_type: partition_map
+---
+name: byte
+type: integer
+attributes:
+  format: unsigned
+  size: 1
+  units: bytes
+---
+name: char
+type: integer
+attributes:
+  format: signed
+  size: 1
+  units: bytes
+---
+name: uint16
+type: integer
+attributes:
+  format: unsigned
+  size: 2
+  units: bytes
+---
+name: uint32
+type: integer
+attributes:
+  format: unsigned
+  size: 4
+  units: bytes
+---
+name: partition_map_entry
+type: structure
+description: Entry of the parition map
+attributes:
+  byte_order: big-endian
+members:
+- name: signature
+  type: stream
+  element_data_type: byte
+  elements_data_size: 2
+  value: "PM"
+- name: unknown1
+  type: stream
+  element_data_type: byte
+  elements_data_size: 2
+  value: "\x00\x00"
+- name: number_of_entries
+  data_type: uint32
+- name: partition_start_sector
+  data_type: uint32
+- name: partition_number_of_sectors
+  data_type: uint32
+- name: partition_name
+  type: string
+  encoding: ascii
+  element_data_type: char
+  elements_data_size: 32
+  elements_terminator: "\x00"
+- name: partition_type
+  type: string
+  encoding: ascii
+  element_data_type: char
+  elements_data_size: 32
+  elements_terminator: "\x00"
+- name: data_area_start_sector
+  data_type: uint32
+- name: data_area_number_of_sectors
+  data_type: uint32
+- name: status_flags
+  data_type: uint32
+- name: boot_code_start_sector
+  data_type: uint32
+- name: boot_code_number_of_sectors
+  data_type: uint32
+- name: unknown2
+  type: stream
+  element_data_type: byte
+  elements_data_size: 4
+- name: boot_code_entry_point
+  data_type: uint32
+- name: unknown3
+  type: stream
+  element_data_type: byte
+  elements_data_size: 4
+- name: boot_code_checksum
+  data_type: uint32
+- name: processor_type
+  type: stream
+  element_data_type: byte
+  elements_data_size: 16
+- name: unknown4
+  type: stream
+  element_data_type: byte
+  elements_data_size: 136
