@@ -41,7 +41,7 @@ attributes:
 ---
 name: partition_map_entry
 type: structure
-description: Entry of the parition map
+description: Parition map entry
 attributes:
   byte_order: big-endian
 members:
