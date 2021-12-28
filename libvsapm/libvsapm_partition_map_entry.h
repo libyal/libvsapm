@@ -1,5 +1,5 @@
 /*
- * The partition map entry functions
+ * Partition map entry functions
  *
  * Copyright (C) 2009-2021, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -40,7 +40,7 @@ struct libvsapm_partition_map_entry
 	 */
 	uint32_t number_of_entries;
 
-	/* The (start) sector number
+	/* The sector number
 	 */
 	uint32_t sector_number;
 
@@ -89,6 +89,16 @@ int libvsapm_partition_map_entry_read_file_io_handle(
      off64_t file_offset,
      libcerror_error_t **error );
 
+int libvsapm_partition_map_entry_get_sector_number(
+     libvsapm_partition_map_entry_t *partition_map_entry,
+     uint32_t *sector_number,
+     libcerror_error_t **error );
+
+int libvsapm_partition_map_entry_get_number_of_sectors(
+     libvsapm_partition_map_entry_t *partition_map_entry,
+     uint32_t *number_of_sectors,
+     libcerror_error_t **error );
+
 int libvsapm_partition_map_entry_get_name_string(
      libvsapm_partition_map_entry_t *partition_map_entry,
      char *string,
@@ -99,16 +109,6 @@ int libvsapm_partition_map_entry_get_type_string(
      libvsapm_partition_map_entry_t *partition_map_entry,
      char *string,
      size_t string_size,
-     libcerror_error_t **error );
-
-int libvsapm_partition_map_entry_get_sector_number(
-     libvsapm_partition_map_entry_t *partition_map_entry,
-     uint32_t *sector_number,
-     libcerror_error_t **error );
-
-int libvsapm_partition_map_entry_get_number_of_sectors(
-     libvsapm_partition_map_entry_t *partition_map_entry,
-     uint32_t *number_of_sectors,
      libcerror_error_t **error );
 
 int libvsapm_partition_map_entry_get_status_flags(

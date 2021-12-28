@@ -308,7 +308,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\libvsapm\vsapm_partition_map.h"
+				RelativePath="..\..\libvsapm\vsapm_partition_map_entry.h"
 				>
 			</File>
 		</Filter>

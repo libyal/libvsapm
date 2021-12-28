@@ -115,6 +115,8 @@ vsapm_test_partition_LDADD = \
 	@PTHREAD_LIBADD@
 
 vsapm_test_partition_map_entry_SOURCES = \
+	vsapm_test_functions.c vsapm_test_functions.h \
+	vsapm_test_libbfio.h \
 	vsapm_test_libcerror.h \
 	vsapm_test_libvsapm.h \
 	vsapm_test_macros.h \
@@ -123,6 +125,14 @@ vsapm_test_partition_map_entry_SOURCES = \
 	vsapm_test_unused.h
 
 vsapm_test_partition_map_entry_LDADD = \
+	@LIBBFIO_LIBADD@ \
+	@LIBCPATH_LIBADD@ \
+	@LIBCFILE_LIBADD@ \
+	@LIBUNA_LIBADD@ \
+	@LIBCSPLIT_LIBADD@ \
+	@LIBCNOTIFY_LIBADD@ \
+	@LIBCLOCALE_LIBADD@ \
+	@LIBCDATA_LIBADD@ \
 	../libvsapm/libvsapm.la \
 	@LIBCERROR_LIBADD@
 

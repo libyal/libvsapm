@@ -41,45 +41,40 @@ attributes:
 ---
 name: partition_map_entry
 type: structure
-description: Parition map entry
+description: Partition map entry
 attributes:
   byte_order: big-endian
 members:
 - name: signature
   type: stream
   element_data_type: byte
-  elements_data_size: 2
-  value: "PM"
-- name: unknown1
-  type: stream
-  element_data_type: byte
-  elements_data_size: 2
-  value: "\x00\x00"
+  elements_data_size: 4
+  value: "PM\x00\x00"
 - name: number_of_entries
   data_type: uint32
-- name: partition_start_sector
+- name: sector_number
   data_type: uint32
-- name: partition_number_of_sectors
+- name: number_of_sectors
   data_type: uint32
-- name: partition_name
+- name: name
   type: string
   encoding: ascii
   element_data_type: char
   elements_data_size: 32
   elements_terminator: "\x00"
-- name: partition_type
+- name: type
   type: string
   encoding: ascii
   element_data_type: char
   elements_data_size: 32
   elements_terminator: "\x00"
-- name: data_area_start_sector
+- name: data_area_sector_number
   data_type: uint32
 - name: data_area_number_of_sectors
   data_type: uint32
 - name: status_flags
   data_type: uint32
-- name: boot_code_start_sector
+- name: boot_code_sector_number
   data_type: uint32
 - name: boot_code_number_of_sectors
   data_type: uint32

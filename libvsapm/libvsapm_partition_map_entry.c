@@ -31,9 +31,9 @@
 #include "libvsapm_libcnotify.h"
 #include "libvsapm_partition_map_entry.h"
 
-#include "vsapm_partition_map.h"
+#include "vsapm_partition_map_entry.h"
 
-/* Creates a partition map_entry
+/* Creates a partition map entry
  * Make sure the value partition_map_entry is referencing, is set to NULL
  * Returns 1 if successful or -1 on error
  */
@@ -106,7 +106,7 @@ on_error:
 	return( -1 );
 }
 
-/* Frees a partition map_entry
+/* Frees a partition map entry
  * Returns 1 if successful or -1 on error
  */
 int libvsapm_partition_map_entry_free(
@@ -136,7 +136,7 @@ int libvsapm_partition_map_entry_free(
 	return( 1 );
 }
 
-/* Reads a partition map_entry
+/* Reads a partition map entry
  * Returns 1 if successful or -1 on error
  */
 int libvsapm_partition_map_entry_read_data(
@@ -485,6 +485,80 @@ int libvsapm_partition_map_entry_read_file_io_handle(
 	return( 1 );
 }
 
+/* Retrieves the partition sector number
+ * Returns 1 if successful or -1 on error
+ */
+int libvsapm_partition_map_entry_get_sector_number(
+     libvsapm_partition_map_entry_t *partition_map_entry,
+     uint32_t *sector_number,
+     libcerror_error_t **error )
+{
+	static char *function = "libvsapm_partition_map_entry_get_sector_number";
+
+	if( partition_map_entry == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid partition map entry.",
+		 function );
+
+		return( -1 );
+	}
+	if( sector_number == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid sector number.",
+		 function );
+
+		return( -1 );
+	}
+	*sector_number = partition_map_entry->sector_number;
+
+	return( 1 );
+}
+
+/* Retrieves the partition number of sectors
+ * Returns 1 if successful or -1 on error
+ */
+int libvsapm_partition_map_entry_get_number_of_sectors(
+     libvsapm_partition_map_entry_t *partition_map_entry,
+     uint32_t *number_of_sectors,
+     libcerror_error_t **error )
+{
+	static char *function = "libvsapm_partition_map_entry_get_number_of_sectors";
+
+	if( partition_map_entry == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid partition map entry.",
+		 function );
+
+		return( -1 );
+	}
+	if( number_of_sectors == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
+		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
+		 "%s: invalid number of sectors.",
+		 function );
+
+		return( -1 );
+	}
+	*number_of_sectors = partition_map_entry->number_of_sectors;
+
+	return( 1 );
+}
+
 /* Retrieves the ASCII encoded string of the partition name
  * Returns 1 if successful or -1 on error
  */
@@ -609,80 +683,6 @@ int libvsapm_partition_map_entry_get_type_string(
 		return( -1 );
 	}
 	string[ partition_map_entry->type_length ] = 0;
-
-	return( 1 );
-}
-
-/* Retrieves the partition sector number
- * Returns 1 if successful or -1 on error
- */
-int libvsapm_partition_map_entry_get_sector_number(
-     libvsapm_partition_map_entry_t *partition_map_entry,
-     uint32_t *sector_number,
-     libcerror_error_t **error )
-{
-	static char *function = "libvsapm_partition_map_entry_get_sector_number";
-
-	if( partition_map_entry == NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid partition map entry.",
-		 function );
-
-		return( -1 );
-	}
-	if( sector_number == NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid sector number.",
-		 function );
-
-		return( -1 );
-	}
-	*sector_number = partition_map_entry->sector_number;
-
-	return( 1 );
-}
-
-/* Retrieves the partition number of sectors
- * Returns 1 if successful or -1 on error
- */
-int libvsapm_partition_map_entry_get_number_of_sectors(
-     libvsapm_partition_map_entry_t *partition_map_entry,
-     uint32_t *number_of_sectors,
-     libcerror_error_t **error )
-{
-	static char *function = "libvsapm_partition_map_entry_get_number_of_sectors";
-
-	if( partition_map_entry == NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid partition map entry.",
-		 function );
-
-		return( -1 );
-	}
-	if( number_of_sectors == NULL )
-	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
-		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
-		 "%s: invalid number of sectors.",
-		 function );
-
-		return( -1 );
-	}
-	*number_of_sectors = partition_map_entry->number_of_sectors;
 
 	return( 1 );
 }

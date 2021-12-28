@@ -27,6 +27,8 @@
 #include <stdlib.h>
 #endif
 
+#include "vsapm_test_functions.h"
+#include "vsapm_test_libbfio.h"
 #include "vsapm_test_libcerror.h"
 #include "vsapm_test_libvsapm.h"
 #include "vsapm_test_macros.h"
@@ -460,6 +462,221 @@ on_error:
 	return( 0 );
 }
 
+/* Tests the libvsapm_partition_map_entry_read_file_io_handle function
+ * Returns 1 if successful or 0 if not
+ */
+int vsapm_test_partition_map_entry_read_file_io_handle(
+     void )
+{
+	libbfio_handle_t *file_io_handle                    = NULL;
+	libcerror_error_t *error                            = NULL;
+	libvsapm_partition_map_entry_t *partition_map_entry = NULL;
+	int result                                          = 0;
+
+	/* Initialize test
+	 */
+	result = libvsapm_partition_map_entry_initialize(
+	          &partition_map_entry,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	VSAPM_TEST_ASSERT_IS_NOT_NULL(
+	 "partition_map_entry",
+	 partition_map_entry );
+
+	VSAPM_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Initialize file IO handle
+	 */
+	result = vsapm_test_open_file_io_handle(
+	          &file_io_handle,
+	          vsapm_test_partition_map_entry_data1,
+	          512,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	VSAPM_TEST_ASSERT_IS_NOT_NULL(
+	 "file_io_handle",
+	 file_io_handle );
+
+	VSAPM_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test regular cases
+	 */
+	result = libvsapm_partition_map_entry_read_file_io_handle(
+	          partition_map_entry,
+	          file_io_handle,
+	          0,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	VSAPM_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test error cases
+	 */
+	result = libvsapm_partition_map_entry_read_file_io_handle(
+	          NULL,
+	          file_io_handle,
+	          0,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	VSAPM_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = libvsapm_partition_map_entry_read_file_io_handle(
+	          partition_map_entry,
+	          NULL,
+	          0,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	VSAPM_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	/* Clean up file IO handle
+	 */
+	result = vsapm_test_close_file_io_handle(
+	          &file_io_handle,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	VSAPM_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test data too small
+	 */
+	result = vsapm_test_open_file_io_handle(
+	          &file_io_handle,
+	          vsapm_test_partition_map_entry_data1,
+	          512 - 1,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	VSAPM_TEST_ASSERT_IS_NOT_NULL(
+	 "file_io_handle",
+	 file_io_handle );
+
+	VSAPM_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	result = libvsapm_partition_map_entry_read_file_io_handle(
+	          partition_map_entry,
+	          file_io_handle,
+	          0,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	VSAPM_TEST_ASSERT_IS_NOT_NULL(
+	 "error",
+	 error );
+
+	libcerror_error_free(
+	 &error );
+
+	result = vsapm_test_close_file_io_handle(
+	          &file_io_handle,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	VSAPM_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Clean up
+	 */
+	result = libvsapm_partition_map_entry_free(
+	          &partition_map_entry,
+	          &error );
+
+	VSAPM_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	VSAPM_TEST_ASSERT_IS_NULL(
+	 "partition_map_entry",
+	 partition_map_entry );
+
+	VSAPM_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	return( 1 );
+
+on_error:
+	if( error != NULL )
+	{
+		libcerror_error_free(
+		 &error );
+	}
+	if( file_io_handle != NULL )
+	{
+		libbfio_handle_free(
+		 &file_io_handle,
+		 NULL );
+	}
+	if( partition_map_entry != NULL )
+	{
+		libvsapm_partition_map_entry_free(
+		 &partition_map_entry,
+		 NULL );
+	}
+	return( 0 );
+}
+
 #endif /* defined( __GNUC__ ) && !defined( LIBVSAPM_DLL_IMPORT ) */
 
 /* The main program
@@ -491,13 +708,19 @@ int main(
 	 "libvsapm_partition_map_entry_read_data",
 	 vsapm_test_partition_map_entry_read_data );
 
-	/* TODO add tests for libvsapm_partition_map_entry_read_file_io_handle */
+	VSAPM_TEST_RUN(
+	 "libvsapm_partition_map_entry_read_file_io_handle",
+	 vsapm_test_partition_map_entry_read_file_io_handle );
 
 #endif /* defined( __GNUC__ ) && !defined( LIBVSAPM_DLL_IMPORT ) */
 
 	return( EXIT_SUCCESS );
 
+#if defined( __GNUC__ ) && !defined( LIBVSAPM_DLL_IMPORT )
+
 on_error:
 	return( EXIT_FAILURE );
+
+#endif /* defined( __GNUC__ ) && !defined( LIBVSAPM_DLL_IMPORT ) */
 }
 

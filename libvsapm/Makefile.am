@@ -42,7 +42,7 @@ libvsapm_la_SOURCES = \
 	libvsapm_types.h \
 	libvsapm_unused.h \
 	libvsapm_volume.c libvsapm_volume.h \
-	vsapm_partition_map.h
+	vsapm_partition_map_entry.h
 
 libvsapm_la_LIBADD = \
 	@LIBCERROR_LIBADD@ \

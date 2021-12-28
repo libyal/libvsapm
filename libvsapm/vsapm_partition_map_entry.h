@@ -1,5 +1,5 @@
 /*
- * Apple Partition Map (APM) partition map definitions
+ * Apple Partition Map (APM) partition map entry definitions
  *
  * Copyright (C) 2009-2021, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -19,8 +19,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined( _VSAPM_PARTITION_MAP_H )
-#define _VSAPM_PARTITION_MAP_H
+#if !defined( _VSAPM_PARTITION_MAP_ENTRY_H )
+#define _VSAPM_PARTITION_MAP_ENTRY_H
 
 #include <common.h>
 #include <types.h>
@@ -134,5 +134,5 @@ struct vsapm_partition_map_entry
 }
 #endif
 
-#endif /* !defined( _VSAPM_PARTITION_MAP_H ) */
+#endif /* !defined( _VSAPM_PARTITION_MAP_ENTRY_H ) */
 
