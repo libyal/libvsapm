@@ -29,17 +29,6 @@ Requires: libvsapm = %{version}-%{release}
 %description -n libvsapm-devel
 Header files and libraries for developing applications for libvsapm.
 
-%package -n libvsapm-python2
-Obsoletes: libvsapm-python < %{version}
-Provides: libvsapm-python = %{version}
-Summary: Python 2 bindings for libvsapm
-Group: System Environment/Libraries
-Requires: libvsapm = %{version}-%{release} python2
-BuildRequires: python2-devel
-
-%description -n libvsapm-python2
-Python 2 bindings for libvsapm
-
 %package -n libvsapm-python3
 Summary: Python 3 bindings for libvsapm
 Group: System Environment/Libraries
@@ -61,7 +50,7 @@ Several tools for Several tools for reading Apple Partition Map (APM) volume sys
 %setup -q
 
 %build
-%configure --prefix=/usr --libdir=%{_libdir} --mandir=%{_mandir} --enable-python2 --enable-python3
+%configure --prefix=/usr --libdir=%{_libdir} --mandir=%{_mandir} --enable-python3
 make %{?_smp_mflags}
 
 %install
@@ -96,14 +85,6 @@ rm -rf %{buildroot}
 %{_libdir}/pkgconfig/libvsapm.pc
 %{_includedir}/*
 %{_mandir}/man3/*
-
-%files -n libvsapm-python2
-%defattr(644,root,root,755)
-%license COPYING COPYING.LESSER
-%doc AUTHORS README
-%{_libdir}/python2*/site-packages/*.a
-%{_libdir}/python2*/site-packages/*.la
-%{_libdir}/python2*/site-packages/*.so
 
 %files -n libvsapm-python3
 %defattr(644,root,root,755)
