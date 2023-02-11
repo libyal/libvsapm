@@ -1,4 +1,4 @@
-.Dd August 21, 2021
+.Dd February 11, 2023
 .Dt libvsapm 3
 .Os libvsapm
 .Sh NAME
@@ -89,9 +89,9 @@ Partition functions
 .Ft int
 .Fn libvsapm_partition_get_type_string "libvsapm_partition_t *partition" "char *string" "size_t string_size" "libvsapm_error_t **error"
 .Ft int
-.Fn libvsapm_partition_get_volume_offset "libvsapm_partition_t *partition" "off64_t *volume_offset" "libvsapm_error_t **error"
-.Ft int
 .Fn libvsapm_partition_get_status_flags "libvsapm_partition_t *partition" "uint32_t *status_flags" "libvsapm_error_t **error"
+.Ft int
+.Fn libvsapm_partition_get_volume_offset "libvsapm_partition_t *partition" "off64_t *volume_offset" "libvsapm_error_t **error"
 .Ft ssize_t
 .Fn libvsapm_partition_read_buffer "libvsapm_partition_t *partition" "void *buffer" "size_t buffer_size" "libvsapm_error_t **error"
 .Ft ssize_t
@@ -131,7 +131,7 @@ Please report bugs of any kind on the project issue tracker: https://github.com/
 .Sh AUTHOR
 These man pages are generated from "libvsapm.h".
 .Sh COPYRIGHT
-Copyright (C) 2009-2022, Joachim Metz <joachim.metz@gmail.com>.
+Copyright (C) 2009-2023, Joachim Metz <joachim.metz@gmail.com>.
 .sp
 This is free software; see the source for copying conditions.
 There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
