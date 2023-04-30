@@ -135,8 +135,6 @@ stamp-h[1-9]
 /tests/vsapm_test_notify
 /tests/vsapm_test_partition
 /tests/vsapm_test_partition_map_entry
-/tests/vsapm_test_partition_values
-/tests/vsapm_test_section_values
 /tests/vsapm_test_sector_data
 /tests/vsapm_test_support
 /tests/vsapm_test_tools_info_handle

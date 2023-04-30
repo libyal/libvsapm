@@ -198,10 +198,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\libvsapm\libvsapm_section_values.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\libvsapm\libvsapm_sector_data.c"
 				>
 			</File>
@@ -281,10 +277,6 @@
 			</File>
 			<File
 				RelativePath="..\..\libvsapm\libvsapm_partition_map_entry.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libvsapm\libvsapm_section_values.h"
 				>
 			</File>
 			<File

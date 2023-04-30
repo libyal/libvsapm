@@ -18,7 +18,6 @@ MSVSCPP_FILES = \
 	vsapm_test_notify/vsapm_test_notify.vcproj \
 	vsapm_test_partition/vsapm_test_partition.vcproj \
 	vsapm_test_partition_map_entry/vsapm_test_partition_map_entry.vcproj \
-	vsapm_test_section_values/vsapm_test_section_values.vcproj \
 	vsapm_test_sector_data/vsapm_test_sector_data.vcproj \
 	vsapm_test_support/vsapm_test_support.vcproj \
 	vsapm_test_tools_info_handle/vsapm_test_tools_info_handle.vcproj \

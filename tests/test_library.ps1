@@ -6,7 +6,7 @@ $ExitSuccess = 0
 $ExitFailure = 1
 $ExitIgnore = 77
 
-$LibraryTests = "error io_handle notify partition_map_entry section_values sector_data"
+$LibraryTests = "error io_handle notify partition_map_entry sector_data"
 $LibraryTestsWithInput = "partition support volume"
 $OptionSets = ""
 

@@ -36,7 +36,6 @@ libvsapm_la_SOURCES = \
 	libvsapm_notify.c libvsapm_notify.h \
 	libvsapm_partition.c libvsapm_partition.h \
 	libvsapm_partition_map_entry.c libvsapm_partition_map_entry.h \
-	libvsapm_section_values.c libvsapm_section_values.h \
 	libvsapm_sector_data.c libvsapm_sector_data.h \
 	libvsapm_support.c libvsapm_support.h \
 	libvsapm_types.h \

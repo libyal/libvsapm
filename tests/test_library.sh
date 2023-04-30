@@ -7,7 +7,7 @@ EXIT_SUCCESS=0;
 EXIT_FAILURE=1;
 EXIT_IGNORE=77;
 
-LIBRARY_TESTS="error io_handle notify partition_map_entry section_values sector_data";
+LIBRARY_TESTS="error io_handle notify partition_map_entry sector_data";
 LIBRARY_TESTS_WITH_INPUT="partition support volume";
 OPTION_SETS="";
 

@@ -49,7 +49,6 @@ check_PROGRAMS = \
 	vsapm_test_notify \
 	vsapm_test_partition \
 	vsapm_test_partition_map_entry \
-	vsapm_test_section_values \
 	vsapm_test_sector_data \
 	vsapm_test_support \
 	vsapm_test_tools_info_handle \
@@ -133,18 +132,6 @@ vsapm_test_partition_map_entry_LDADD = \
 	@LIBCNOTIFY_LIBADD@ \
 	@LIBCLOCALE_LIBADD@ \
 	@LIBCDATA_LIBADD@ \
-	../libvsapm/libvsapm.la \
-	@LIBCERROR_LIBADD@
-
-vsapm_test_section_values_SOURCES = \
-	vsapm_test_libcerror.h \
-	vsapm_test_libvsapm.h \
-	vsapm_test_macros.h \
-	vsapm_test_memory.c vsapm_test_memory.h \
-	vsapm_test_section_values.c \
-	vsapm_test_unused.h
-
-vsapm_test_section_values_LDADD = \
 	../libvsapm/libvsapm.la \
 	@LIBCERROR_LIBADD@
 

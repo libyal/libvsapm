@@ -34,7 +34,6 @@
 #include "libvsapm_libcnotify.h"
 #include "libvsapm_partition.h"
 #include "libvsapm_partition_map_entry.h"
-#include "libvsapm_section_values.h"
 #include "libvsapm_types.h"
 
 /* Creates a volume
@@ -1276,7 +1275,7 @@ int libvsapm_volume_set_bytes_per_sector(
 		return( -1 );
 	}
 #endif
-	bytes_per_sector = internal_volume->io_handle->bytes_per_sector = bytes_per_sector;
+	internal_volume->io_handle->bytes_per_sector = bytes_per_sector;
 
 #if defined( HAVE_LIBVSAPM_MULTI_THREAD_SUPPORT )
 	if( libcthreads_read_write_lock_release_for_write(
