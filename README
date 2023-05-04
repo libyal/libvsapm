@@ -1,7 +1,5 @@
 libvsapm is a library to access the Apple Partition Map (APM) volume system format.
 
-Note that this project currently only focuses on the analysis of the format.
-
 Project information:
 
 * Status: experimental
