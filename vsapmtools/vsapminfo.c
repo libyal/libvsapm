@@ -1,5 +1,5 @@
 /*
- * Shows information obtained from a Apple Partition Map (APM) volume system
+ * Shows information obtained from an Apple Partition Map (APM) volume system
  *
  * Copyright (C) 2009-2023, Joachim Metz <joachim.metz@gmail.com>
  *

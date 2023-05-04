@@ -120,7 +120,7 @@ int libvsapm_set_codepage(
 
 #endif /* !defined( HAVE_LOCAL_LIBVSAPM ) */
 
-/* Determines if a volume contains a Apple Partition Map (APM) signature
+/* Determines if a volume contains an Apple Partition Map (APM) signature
  * Returns 1 if true, 0 if not or -1 on error
  */
 int libvsapm_check_volume_signature(
@@ -227,7 +227,7 @@ on_error:
 
 #if defined( HAVE_WIDE_CHARACTER_TYPE )
 
-/* Determines if a volume contains a Apple Partition Map (APM) signature
+/* Determines if a volume contains an Apple Partition Map (APM) signature
  * Returns 1 if true, 0 if not or -1 on error
  */
 int libvsapm_check_volume_signature_wide(
@@ -334,7 +334,7 @@ on_error:
 
 #endif /* defined( HAVE_WIDE_CHARACTER_TYPE ) */
 
-/* Determines if a volume contains a Apple Partition Map (APM) signature using a Basic File IO (bfio) handle
+/* Determines if a volume contains an Apple Partition Map (APM) signature using a Basic File IO (bfio) handle
  * Returns 1 if true, 0 if not or -1 on error
  */
 int libvsapm_check_volume_signature_file_io_handle(

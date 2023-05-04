@@ -74,7 +74,7 @@ The APM consists of:
 | Characteristics | Description
 | Byte order | big-endian
 | Date and time values |
-| Character strings |
+| Character strings | ASCII
 |===
 
 == Terminology
