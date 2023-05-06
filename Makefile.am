@@ -33,8 +33,10 @@ DPKG_FILES = \
 	dpkg/control \
 	dpkg/copyright \
 	dpkg/rules \
-	dpkg/libvsapm-dev.install \
 	dpkg/libvsapm.install \
+	dpkg/libvsapm-dev.install \
+	dpkg/libvsapm-python3.install \
+	dpkg/libvsapm-tools.install \
 	dpkg/source/format
 
 GETTEXT_FILES = \
