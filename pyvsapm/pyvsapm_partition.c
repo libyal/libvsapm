@@ -420,7 +420,6 @@ PyObject *pyvsapm_partition_get_name_string(
 
 	PyObject *string_object  = NULL;
 	libcerror_error_t *error = NULL;
-	const char *errors       = NULL;
 	static char *function    = "pyvsapm_partition_get_name_string";
 	size_t name_length       = 0;
 	int result               = 0;
@@ -469,7 +468,7 @@ PyObject *pyvsapm_partition_get_name_string(
 	string_object = PyUnicode_DecodeUTF8(
 			 (char *) name,
 			 (Py_ssize_t) name_length,
-			 errors );
+			 NULL );
 
 	return( string_object );
 }
@@ -485,7 +484,6 @@ PyObject *pyvsapm_partition_get_type_string(
 
 	PyObject *string_object  = NULL;
 	libcerror_error_t *error = NULL;
-	const char *errors       = NULL;
 	static char *function    = "pyvsapm_partition_get_type_string";
 	size_t type_length       = 0;
 	int result               = 0;
@@ -534,7 +532,7 @@ PyObject *pyvsapm_partition_get_type_string(
 	string_object = PyUnicode_DecodeUTF8(
 			 (char *) type,
 			 (Py_ssize_t) type_length,
-			 errors );
+			 NULL );
 
 	return( string_object );
 }
