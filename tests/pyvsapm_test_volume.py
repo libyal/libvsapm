@@ -136,12 +136,14 @@ class VolumeTypeTests(unittest.TestCase):
 
     vsapm_volume.open(test_source)
 
-    bytes_per_sector = vsapm_volume.get_bytes_per_sector()
-    self.assertIsNotNone(bytes_per_sector)
+    try:
+      bytes_per_sector = vsapm_volume.get_bytes_per_sector()
+      self.assertIsNotNone(bytes_per_sector)
 
-    self.assertIsNotNone(vsapm_volume.bytes_per_sector)
+      self.assertIsNotNone(vsapm_volume.bytes_per_sector)
 
-    vsapm_volume.close()
+    finally:
+      vsapm_volume.close()
 
   def test_get_number_of_partitions(self):
     """Tests the get_number_of_partitions function and number_of_partitions property."""
@@ -153,12 +155,34 @@ class VolumeTypeTests(unittest.TestCase):
 
     vsapm_volume.open(test_source)
 
-    number_of_partitions = vsapm_volume.get_number_of_partitions()
-    self.assertIsNotNone(number_of_partitions)
+    try:
+      number_of_partitions = vsapm_volume.get_number_of_partitions()
+      self.assertIsNotNone(number_of_partitions)
 
-    self.assertIsNotNone(vsapm_volume.number_of_partitions)
+      self.assertIsNotNone(vsapm_volume.number_of_partitions)
 
-    vsapm_volume.close()
+    finally:
+      vsapm_volume.close()
+
+  def test_get_partition(self):
+    """Tests the get_partition function."""
+    test_source = unittest.source
+    if not test_source:
+      raise unittest.SkipTest("missing source")
+
+    vsapm_volume = pyvsapm.volume()
+
+    vsapm_volume.open(test_source)
+
+    try:
+      if not vsapm_volume.number_of_partitions:
+        raise unittest.SkipTest("missing partitions")
+
+      partition = vsapm_volume.get_partition(0)
+      self.assertIsNotNone(partition)
+
+    finally:
+      vsapm_volume.close()
 
 
 if __name__ == "__main__":
