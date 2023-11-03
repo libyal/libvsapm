@@ -69,11 +69,13 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f libvsapm_definitions.h
-	/bin/rm -f libvsapm.rc
-	/bin/rm -f Makefile
+	-rm -f libvsapm_definitions.h
+	-rm -f libvsapm.rc
+	-rm -f Makefile
 
-splint:
+sources-local: $(BUILT_SOURCES)
+
+splint-local:
 	@echo "Running splint on libvsapm ..."
 	-splint -preproc -redef $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(libvsapm_la_SOURCES)
 

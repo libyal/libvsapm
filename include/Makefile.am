@@ -19,9 +19,9 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f libvsapm.h
-	/bin/rm -f libvsapm/definitions.h
-	/bin/rm -f libvsapm/features.h
-	/bin/rm -f libvsapm/types.h
-	/bin/rm -f Makefile
+	-rm -f libvsapm.h
+	-rm -f libvsapm/definitions.h
+	-rm -f libvsapm/features.h
+	-rm -f libvsapm/types.h
+	-rm -f Makefile
 
