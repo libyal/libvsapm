@@ -18,8 +18,6 @@ SUBDIRS = \
 	libvsapm \
 	vsapmtools \
 	pyvsapm \
-	pyvsapm-python2 \
-	pyvsapm-python3 \
 	po \
 	manuals \
 	tests \

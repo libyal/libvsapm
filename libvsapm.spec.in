@@ -32,7 +32,7 @@ Header files and libraries for developing applications for libvsapm.
 Summary: Python 3 bindings for libvsapm
 Group: System Environment/Libraries
 Requires: libvsapm = %{version}-%{release} python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-setuptools
 
 %description -n libvsapm-python3
 Python 3 bindings for libvsapm
@@ -49,7 +49,7 @@ Several tools for Several tools for reading Apple Partition Map (APM) volume sys
 %setup -q
 
 %build
-%configure --prefix=/usr --libdir=%{_libdir} --mandir=%{_mandir} --enable-python3
+%configure --prefix=/usr --libdir=%{_libdir} --mandir=%{_mandir} --enable-python
 make %{?_smp_mflags}
 
 %install
