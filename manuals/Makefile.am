@@ -6,9 +6,7 @@ EXTRA_DIST = \
 	libvsapm.3 \
 	vsapminfo.1
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f Makefile
 

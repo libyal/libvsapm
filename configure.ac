@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
  [libvsapm],
- [20240226],
+ [20240503],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(

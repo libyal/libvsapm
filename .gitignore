@@ -132,6 +132,7 @@ stamp-h[1-9]
 /vsapmtools/vsapminfo
 /tests/*.exe
 /tests/input
+/tests/notify_stream.log
 /tests/tmp*
 /tests/vsapm_test_error
 /tests/vsapm_test_io_handle

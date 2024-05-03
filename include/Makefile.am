@@ -15,13 +15,11 @@ EXTRA_DIST = \
 	libvsapm/features.h.in \
 	libvsapm/types.h.in
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	libvsapm.h \
+	libvsapm/definitions.h \
+	libvsapm/features.h \
+	libvsapm/types.h \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f libvsapm.h
-	-rm -f libvsapm/definitions.h
-	-rm -f libvsapm/features.h
-	-rm -f libvsapm/types.h
-	-rm -f Makefile
 
