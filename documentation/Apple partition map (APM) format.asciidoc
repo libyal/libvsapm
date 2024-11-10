@@ -245,15 +245,6 @@ Note that the "is in use" status flags does not appear to be used consistently.
 [appendix]
 == References
 
-`[APPLE96]`
-
-[cols="1,5",options="header"]
-|===
-| Title: | About the SCSI Manager
-| Date: | 1996
-| URL: | http://developer.apple.com/documentation/mac/Devices/Devices-121.html
-|===
-
 `[WIKIPEDIA]`
 
 [cols="1,5",options="header"]
