@@ -30,6 +30,6 @@ jobs:
         head -n 20 projects/libyal/Dockerfile > projects/libvsapm/Dockerfile
         echo "RUN git clone --depth 1 https://github.com/libyal/libvsapm.git libvsapm" >> projects/libvsapm/Dockerfile
         tail -n 3 projects/libyal/Dockerfile >> projects/libvsapm/Dockerfile
-        python3 infra/helper.py build_image --pull libvsapm 
+        python3 infra/helper.py build_image --pull libvsapm
         python3 infra/helper.py build_fuzzers --sanitizer address libvsapm
         python3 infra/helper.py check_build libvsapm
