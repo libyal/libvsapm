@@ -31,14 +31,17 @@
  */
 #if defined( LIBVSAPM_DLL_EXPORT )
 #define LIBVSAPM_EXTERN __declspec(dllexport)
+#define LIBVSAPM_EXTERN_VARIABLE extern __declspec(dllexport)
 
 #elif defined( LIBVSAPM_DLL_IMPORT )
-#define LIBVSAPM_EXTERN extern __declspec(dllimport)
+#define LIBVSAPM_EXTERN __declspec(dllimport)
+#define LIBVSAPM_EXTERN_VARIABLE extern __declspec(dllimport)
 
 #else
 #define LIBVSAPM_EXTERN extern
+#define LIBVSAPM_EXTERN_VARIABLE extern
 
-#endif
+#endif /* defined( LIBVSAPM_DLL_EXPORT ) */
 
 #endif /* !defined( _LIBVSAPM_EXTERN_H ) */
 

@@ -24,21 +24,28 @@
 
 #include <common.h>
 
+#if !defined( __CYGWIN__ ) && !defined( _WIN32 ) && defined( __has_attribute )
+#if __has_attribute( visibility )
+#define LIBVSAPM_INTERNAL	__attribute__((visibility("hidden"))) extern
+
+#else
+#define LIBVSAPM_INTERNAL	extern
+
+#endif /* __has_attribute( visibility ) */
+#else
+#define LIBVSAPM_INTERNAL	extern
+
+#endif /* !defined( __CYGWIN__ ) && !defined( _WIN32 ) && defined( __has_attribute ) */
+
 /* Define HAVE_LOCAL_LIBVSAPM for local use of libvsapm
  */
 #if !defined( HAVE_LOCAL_LIBVSAPM )
 
 #include <libvsapm/extern.h>
 
-#if defined( __CYGWIN__ ) || defined( __MINGW32__ )
-#define LIBVSAPM_EXTERN_VARIABLE	extern
-#else
-#define LIBVSAPM_EXTERN_VARIABLE	LIBVSAPM_EXTERN
-#endif
-
 #else
 #define LIBVSAPM_EXTERN		/* extern */
-#define LIBVSAPM_EXTERN_VARIABLE	extern
+#define LIBVSAPM_EXTERN_VARIABLE	LIBVSAPM_INTERNAL
 
 #endif /* !defined( HAVE_LOCAL_LIBVSAPM ) */
 

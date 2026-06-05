@@ -18,6 +18,10 @@ AM_CPPFLAGS = \
 	@PTHREAD_CPPFLAGS@ \
 	@LIBVSAPM_DLL_IMPORT@
 
+AM_TESTS_ENVIRONMENT = \
+	export PYTHON="@PYTHON@"; \
+	export TESTS_USE_WINAPI="@TESTS_USE_WINAPI@";
+
 if HAVE_PYTHON_TESTS
 TESTS_PYVSAPM = \
 	test_python_module.sh
@@ -205,7 +209,8 @@ vsapm_test_tools_output_SOURCES = \
 
 vsapm_test_tools_output_LDADD = \
 	../libvsapm/libvsapm.la \
-	@LIBCERROR_LIBADD@
+	@LIBCERROR_LIBADD@ \
+	@LIBINTL@
 
 vsapm_test_tools_signal_SOURCES = \
 	../vsapmtools/vsapmtools_signal.c ../vsapmtools/vsapmtools_signal.h \
