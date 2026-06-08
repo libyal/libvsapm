@@ -93,6 +93,7 @@ vsapm_test_notify_LDADD = \
 	@LIBCERROR_LIBADD@
 
 vsapm_test_partition_SOURCES = \
+	vsapm_test_extern.h \
 	vsapm_test_functions.c vsapm_test_functions.h \
 	vsapm_test_getopt.c vsapm_test_getopt.h \
 	vsapm_test_libbfio.h \
@@ -224,6 +225,7 @@ vsapm_test_tools_signal_LDADD = \
 	@LIBCERROR_LIBADD@
 
 vsapm_test_volume_SOURCES = \
+	vsapm_test_extern.h \
 	vsapm_test_functions.c vsapm_test_functions.h \
 	vsapm_test_getopt.c vsapm_test_getopt.h \
 	vsapm_test_libbfio.h \
