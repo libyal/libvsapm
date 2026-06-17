@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
   [libvsapm],
-  [20260614],
+  [20260617],
   [https://github.com/libyal/libvsapm/issues])
 
 AC_CONFIG_SRCDIR(
