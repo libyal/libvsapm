@@ -3,8 +3,7 @@ man_MANS = \
 	vsapminfo.1
 
 EXTRA_DIST = \
-	libvsapm.3 \
-	vsapminfo.1
+	$(man_MANS)
 
 DISTCLEANFILES = \
 	Makefile \
