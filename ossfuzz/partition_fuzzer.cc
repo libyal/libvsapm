@@ -47,10 +47,18 @@ int LLVMFuzzerTestOneInput(
      const uint8_t *data,
      size_t size )
 {
+	uint8_t buffer[ 512 ];
+	char string[ 64 ];
+
 	libbfio_handle_t *file_io_handle = NULL;
 	libvsapm_partition_t *partition  = NULL;
 	libvsapm_volume_t *volume        = NULL;
+	off64_t partition_offset         = 0;
+	off64_t volume_offset            = 0;
+	size64_t partition_size          = 0;
+	uint32_t value_32bit             = 0;
 	int number_of_partitions         = 0;
+	int read_iterator                = 0;
 
 	if( libbfio_memory_range_initialize(
 	     &file_io_handle,
@@ -93,12 +101,70 @@ int LLVMFuzzerTestOneInput(
 		     volume,
 		     0,
 		     &partition,
-		     NULL ) == 1 )
+		     NULL ) != 1 )
 		{
-			libvsapm_partition_free(
-			 &partition,
-			 NULL );
+			goto on_error_libvsapm_volume;
 		}
+		if( libvsapm_partition_get_name_string(
+		     partition,
+		     string,
+		     64,
+		     NULL ) != 1 )
+		{
+			goto on_error_libvsapm_partition;
+		}
+		if( libvsapm_partition_get_type_string(
+		     partition,
+		     string,
+		     64,
+		     NULL ) != 1 )
+		{
+			goto on_error_libvsapm_partition;
+		}
+		if( libvsapm_partition_get_status_flags(
+		     partition,
+		     &value_32bit,
+		     NULL ) != 1 )
+		{
+			goto on_error_libvsapm_partition;
+		}
+		if( libvsapm_partition_get_volume_offset(
+		     partition,
+		     &volume_offset,
+		     NULL ) != 1 )
+		{
+			goto on_error_libvsapm_partition;
+		}
+		if( libvsapm_partition_get_size(
+		     partition,
+		     &partition_size,
+		     NULL ) != 1 )
+		{
+			goto on_error_libvsapm_partition;
+		}
+		for( read_iterator = 0;
+		     read_iterator < 128;
+		     read_iterator++ )
+		{
+			if( partition_offset >= partition_size )
+			{
+				break;
+			}
+			if( libvsapm_partition_read_buffer_at_offset(
+			     partition,
+			     buffer,
+			     497,
+			     partition_offset,
+			     NULL ) == -1 )
+			{
+				goto on_error_libvsapm_partition;
+			}
+			partition_offset += 497;
+		}
+on_error_libvsapm_partition:
+		libvsapm_partition_free(
+		 &partition,
+		 NULL );
 	}
 	libvsapm_volume_close(
 	 volume,
