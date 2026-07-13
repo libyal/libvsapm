@@ -243,6 +243,8 @@ int vsapm_test_partition_initialize(
 	 "error",
 	 error );
 
+	io_handle->bytes_per_sector = 512;
+
 	result = libvsapm_partition_map_entry_initialize(
 	          &partition_map_entry,
 	          &error );
@@ -581,6 +583,8 @@ int vsapm_test_partition_free(
 	VSAPM_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
+
+	io_handle->bytes_per_sector = 512;
 
 	result = libvsapm_partition_map_entry_initialize(
 	          &partition_map_entry,
@@ -1973,6 +1977,8 @@ int vsapm_test_internal_partition_seek_offset(
 	VSAPM_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
+
+	io_handle->bytes_per_sector = 512;
 
 	result = libvsapm_partition_map_entry_initialize(
 	          &partition_map_entry,

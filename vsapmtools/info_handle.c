@@ -217,7 +217,7 @@ int info_handle_initialize(
 
 		goto on_error;
 	}
-	( *info_handle )->bytes_per_sector = 512;
+	( *info_handle )->bytes_per_sector = 0;
 	( *info_handle )->notify_stream    = INFO_HANDLE_NOTIFY_STREAM;
 
 	return( 1 );
@@ -402,19 +402,22 @@ int info_handle_open_input(
 
 		return( -1 );
 	}
-	if( libvsapm_volume_set_bytes_per_sector(
-	     info_handle->input_volume,
-	     info_handle->bytes_per_sector,
-	     error ) != 1 )
+	if( info_handle->bytes_per_sector != 0 )
 	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-		 LIBCERROR_RUNTIME_ERROR_SET_FAILED,
-		 "%s: unable to set bytes per sector in input handle.",
-		 function );
+		if( libvsapm_volume_set_bytes_per_sector(
+		     info_handle->input_volume,
+		     info_handle->bytes_per_sector,
+		     error ) != 1 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+			 LIBCERROR_RUNTIME_ERROR_SET_FAILED,
+			 "%s: unable to set bytes per sector in input handle.",
+			 function );
 
-		return( -1 );
+			return( -1 );
+		}
 	}
 #if defined( HAVE_WIDE_SYSTEM_CHARACTER )
 	if( libvsapm_volume_open_wide(

@@ -344,8 +344,9 @@ int libvsapm_check_volume_signature_file_io_handle(
 	uint8_t signature[ 512 ];
 
 	static char *function      = "libvsapm_check_volume_signature_file_io_handle";
-	ssize_t read_count         = 0;
+	off64_t file_offset        = 512;
 	int file_io_handle_is_open = 0;
+	int result                 = 0;
 
 	if( file_io_handle == NULL )
 	{
@@ -390,23 +391,38 @@ int libvsapm_check_volume_signature_file_io_handle(
 			goto on_error;
 		}
 	}
-	read_count = libbfio_handle_read_buffer_at_offset(
-	              file_io_handle,
-	              signature,
-	              512,
-	              512,
-	              error );
-
-	if( read_count != 512 )
+	while( file_offset < 3584 )
 	{
-		libcerror_error_set(
-		 error,
-		 LIBCERROR_ERROR_DOMAIN_IO,
-		 LIBCERROR_IO_ERROR_READ_FAILED,
-		 "%s: unable to read signature at offset: 512 (0x00000200).",
-		 function );
+		if( libbfio_handle_read_buffer_at_offset(
+		     file_io_handle,
+		     signature,
+		     512,
+		     file_offset,
+		     error ) != 512 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_IO,
+			 LIBCERROR_IO_ERROR_READ_FAILED,
+			 "%s: unable to read signature at offset: %" PRIi64 " (0x%08" PRIx64 ").",
+			 function,
+			 file_offset,
+			 file_offset );
 
-		goto on_error;
+			goto on_error;
+		}
+		if( ( signature[ 0 ] == 'P' )
+		 && ( signature[ 1 ] == 'M' )
+		 && ( memory_compare(
+		       &( signature[ 48 ] ),
+		       "Apple_partition_map\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
+		       32 ) == 0 ) )
+		{
+			result = 1;
+
+			break;
+		}
+		file_offset += 1536;
 	}
 	if( file_io_handle_is_open == 0 )
 	{
@@ -424,16 +440,7 @@ int libvsapm_check_volume_signature_file_io_handle(
 			goto on_error;
 		}
 	}
-	if( ( signature[ 0 ] == 'P' )
-	 && ( signature[ 1 ] == 'M' )
-	 && ( memory_compare(
-	       &( signature[ 48 ] ),
-	       "Apple_partition_map\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
-	       32 ) == 0 ) )
-	{
-		return( 1 );
-	}
-	return( 0 );
+	return( result );
 
 on_error:
 	if( file_io_handle_is_open == 0 )

@@ -961,12 +961,15 @@ int libvsapm_internal_volume_open_read(
      libbfio_handle_t *file_io_handle,
      libcerror_error_t **error )
 {
+	uint8_t signature[ 512 ];
+
 	libvsapm_partition_map_entry_t *partition_map_entry = NULL;
 	static char *function                               = "libvsapm_internal_volume_open_read";
 	off64_t partition_map_entry_offset                  = 512;
 	uint32_t partition_map_entry_index                  = 0;
 	uint32_t partition_map_number_of_entries            = 0;
 	int entry_index                                     = 0;
+	int result                                          = 0;
 
 	if( internal_volume == NULL )
 	{
@@ -975,6 +978,17 @@ int libvsapm_internal_volume_open_read(
 		 LIBCERROR_ERROR_DOMAIN_ARGUMENTS,
 		 LIBCERROR_ARGUMENT_ERROR_INVALID_VALUE,
 		 "%s: invalid internal volume.",
+		 function );
+
+		return( -1 );
+	}
+	if( internal_volume->io_handle == NULL )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_VALUE_MISSING,
+		 "%s: invalid volume - missing IO handle.",
 		 function );
 
 		return( -1 );
@@ -1001,6 +1015,66 @@ int libvsapm_internal_volume_open_read(
 		 function );
 	}
 #endif
+	if( internal_volume->io_handle->bytes_per_sector != 0 )
+	{
+		partition_map_entry_offset = (off64_t) internal_volume->io_handle->bytes_per_sector;
+	}
+	do
+	{
+		if( libbfio_handle_read_buffer_at_offset(
+		     file_io_handle,
+		     signature,
+		     512,
+		     partition_map_entry_offset,
+		     error ) != 512 )
+		{
+			libcerror_error_set(
+			 error,
+			 LIBCERROR_ERROR_DOMAIN_IO,
+			 LIBCERROR_IO_ERROR_READ_FAILED,
+			 "%s: unable to read partition map at offset: %" PRIi64 " (0x%08" PRIx64 ").",
+			 function,
+			 partition_map_entry_offset,
+			 partition_map_entry_offset );
+
+			goto on_error;
+		}
+		if( ( signature[ 0 ] == 'P' )
+		 && ( signature[ 1 ] == 'M' )
+		 && ( memory_compare(
+		       &( signature[ 48 ] ),
+		       "Apple_partition_map\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
+		       32 ) == 0 ) )
+		{
+			result = 1;
+
+			break;
+		}
+		if( internal_volume->io_handle->bytes_per_sector != 0 )
+		{
+			break;
+		}
+		partition_map_entry_offset += 1536;
+	}
+	while( partition_map_entry_offset < 3584 );
+
+	if( internal_volume->io_handle->bytes_per_sector == 0 )
+	{
+		internal_volume->io_handle->bytes_per_sector     = (size_t) partition_map_entry_offset;
+		internal_volume->bytes_per_sector_set_by_library = 1;
+	}
+	if( result == 0 )
+	{
+		libcerror_error_set(
+		 error,
+		 LIBCERROR_ERROR_DOMAIN_RUNTIME,
+		 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
+		 "%s: unsupported partition map signature.",
+		 function,
+		 partition_map_entry_index );
+
+		goto on_error;
+	}
 	do
 	{
 		if( libvsapm_partition_map_entry_initialize(
@@ -1035,21 +1109,6 @@ int libvsapm_internal_volume_open_read(
 		}
 		if( partition_map_entry_index == 0 )
 		{
-			if( memory_compare(
-			     partition_map_entry->type,
-			     "Apple_partition_map\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00",
-			     32 ) != 0 )
-			{
-				libcerror_error_set(
-				 error,
-				 LIBCERROR_ERROR_DOMAIN_RUNTIME,
-				 LIBCERROR_RUNTIME_ERROR_UNSUPPORTED_VALUE,
-				 "%s: invalid partition map entry: %d - unsupported type.",
-				 function,
-				 partition_map_entry_index );
-
-				goto on_error;
-			}
 			partition_map_number_of_entries = partition_map_entry->number_of_entries;
 		}
 		else if( partition_map_entry->number_of_entries != partition_map_number_of_entries )
@@ -1064,7 +1123,7 @@ int libvsapm_internal_volume_open_read(
 
 			goto on_error;
 		}
-		partition_map_entry_offset += 512;
+		partition_map_entry_offset += internal_volume->io_handle->bytes_per_sector;
 
 		if( partition_map_entry_index == 0 )
 		{
